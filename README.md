@@ -26,14 +26,14 @@ to grab the descriptions.
 
 #### Before installing the user script: ####
   
-![Screenshot 1](https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/images/before.png)
+![Before Installation](https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/images/before.png)
   
-#### After installing the user script (before button click): ####
+#### After installing the user script: ####
   
-![Screenshot 2](https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/images/after1.png)
+**Before clicking the button:**  
+![After Installation (before clicking the button)](https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/images/after1.png)
   
-#### After installing the user script (after button click): ####
-  
-![Screenshot 2](https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/images/after2.png)
+**After clicking the button:**  
+![After Installation (after clicking the button)](https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/images/after2.png)
   
   

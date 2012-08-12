@@ -8,7 +8,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
 // @updateURL      https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
-// @version        1.0
+// @version        1.1
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true */
@@ -28,7 +28,7 @@ var userScript = function () {
 		var $firstSimpleRepo = jQuery('body.page-profile ul.repo_list li.simple:first');
 		if ($firstSimpleRepo.length > 0) {
 			$firstSimpleRepo.before('<li id="skratchdot-missing-descriptions" style="text-align:center">' +
-				'<input type="button" style="margin-bottom:10px;height:30px;cursor:pointer;" value="Get Missing Descriptions" />' +
+				'<input type="button" class="minibutton" style="margin-bottom:10px;height:30px;" value="Get Missing Descriptions" />' +
 				'<div class="body" style="padding-top:15px">' +
 				'  <p class="fork-flag">' +
 				'    <span></span>' +

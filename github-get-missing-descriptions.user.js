@@ -8,7 +8,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
 // @updateURL      https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
-// @version        1.1
+// @version        1.2
 // ==/UserScript==
 /*global jQuery */
 /*jslint browser: true */
@@ -27,7 +27,8 @@ var userScript = function () {
 	addDescriptionButton = function () {
 		var $firstSimpleRepo = jQuery('body.page-profile ul.repo_list li.simple:first');
 		if ($firstSimpleRepo.length > 0) {
-			$firstSimpleRepo.before('<li id="skratchdot-missing-descriptions" style="text-align:center">' +
+			$firstSimpleRepo.before('<div id="skratchdot-missing-descriptions" ' +
+				'style="text-align:center; border:1px solid #ddd; border-radius:4px; padding:10px 10px 0; margin:10px 0px;">' +
 				'<input type="button" class="minibutton" style="margin-bottom:10px;height:30px;" value="Get Missing Descriptions" />' +
 				'<div class="body" style="padding-top:15px">' +
 				'  <p class="fork-flag">' +
@@ -37,7 +38,7 @@ var userScript = function () {
 				'    simple repos now have descriptions' +
 				'  </p>' +
 				'</div>' +
-				'</li>');
+				'</div>');
 			updateCounts();
 		}
 	};

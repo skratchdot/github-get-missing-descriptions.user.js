@@ -65,7 +65,7 @@ var userScript = function () {
 						repo = data[i];
 						container = jQuery('li.simple a[href="/' + repo.full_name + '"]').parents('li:first');
 						if (container.length) {
-							updateTime = moment(repo.updated_at);
+							updateTime = moment(repo.pushed_at || repo.updated_at);
 							container.append('<div class="body">' +
 								'<p class="description">' +
 								repo.description +

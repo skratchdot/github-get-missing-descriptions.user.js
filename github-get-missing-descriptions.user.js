@@ -8,27 +8,29 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
 // @updateURL      https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
-// @version        1.2
+// @version        1.3
 // ==/UserScript==
-/*global jQuery */
-/*jslint browser: true */
+/*global jQuery, moment */
+/*jslint browser: true, plusplus: true */
 
 var userScript = function () {
 	'use strict';
 
 	var currentRequest = 0, // When 0, the button is enabled
 		maxRequestsPerBatch = 50, // We only make this many requests per button click
+		currentPage = 1,
+		username = '',
 		// FUNCTIONS
 		addDescriptionButton,
 		getDescription,
+		getUsername,
 		handleClick,
 		updateCounts;
 
 	addDescriptionButton = function () {
 		var $firstSimpleRepo = jQuery('body.page-profile ul.repo_list li.simple:first');
 		if ($firstSimpleRepo.length > 0) {
-			$firstSimpleRepo.before('<div id="skratchdot-missing-descriptions" ' +
-				'style="text-align:center; border:1px solid #ddd; border-radius:4px; padding:10px 10px 0; margin:10px 0px;">' +
+			$firstSimpleRepo.before('<div id="skratchdot-missing-descriptions" style="text-align:center; border:1px solid #ddd; border-radius:4px; padding:10px 10px 0; margin:10px 0px;">' +
 				'<input type="button" class="minibutton" style="margin-bottom:10px;height:30px;" value="Get Missing Descriptions" />' +
 				'<div class="body" style="padding-top:15px">' +
 				'  <p class="fork-flag">' +
@@ -44,36 +46,57 @@ var userScript = function () {
 	};
 
 	getDescription = function () {
-		var $firstItem = jQuery('ul.repo_list li.simple:not(.skratchdot-ajax):first');
-		if (currentRequest > 0 && $firstItem.length > 0) {
-			$firstItem.addClass('skratchdot-ajax');
+		if (currentRequest > 0 && jQuery('ul.repo_list li.simple:not(.skratchdot-ajax)').length > 0) {
 			jQuery.ajax({
-				url : $firstItem.find('h3 a').attr('href'),
-				success : function (data) {
-					var $data = jQuery(data),
-						$item = $data.find('#repository_description');
-					$item.find('span').remove();
-					$firstItem.append('<div class="body">' +
-				        '<p class="description">' +
-				        $item.text() +
-				        '</p>' +
-						'<p class="updated-at">Last updated ' +
-						jQuery('<div>').append($data.find('time.js-relative-date.updated').clone()).html() +
-						'</p>' +
-						'</div>');
-					$firstItem.find('*').show();
-					$firstItem.css('margin-bottom', '10px');
-					currentRequest = currentRequest - 1;
-					updateCounts();
-					getDescription();
+				url : 'https://api.github.com/users/' + getUsername() + '/repos',
+				method : 'get',
+				dataType : 'json',
+				data : {
+					page : currentPage++
 				},
 				error : function () {
-					currentRequest = currentRequest - 1;
 					updateCounts();
+					currentRequest = currentRequest - 1;
+					getDescription();
+				},
+				success : function (data) {
+					var i, repo, container, updateTime;
+					for (i = 0; i < data.length; i++) {
+						repo = data[i];
+						container = jQuery('li.simple a[href="/' + repo.full_name + '"]').parents('li:first');
+						if (container.length) {
+							updateTime = moment(repo.updated_at);
+							container.append('<div class="body">' +
+								'<p class="description">' +
+								repo.description +
+								'</p>' +
+								'<p class="updated-at">Last updated ' +
+								'<time' +
+								' title="' + updateTime.format('YYYY-MM-DD HH:mm:ss') + '"' +
+								' datetime="' + updateTime.format() + '"' +
+								' class="js-relative-date">' +
+								updateTime.fromNow() +
+								'</time>' +
+								'</p>' +
+								'</div>');
+							container.addClass('skratchdot-ajax');
+							container.find('*').show();
+							container.css('margin-bottom', '10px');
+							updateCounts();
+						}
+					}
+					currentRequest = data.length === 0 ? 0 : currentRequest - 1;
 					getDescription();
 				}
 			});
 		}
+	};
+
+	getUsername = function () {
+		if (username === '') {
+			username = jQuery('.userpage .username:first').text().trim();
+		}
+		return username;
 	};
 
 	handleClick = function () {

@@ -20,7 +20,7 @@ to grab the descriptions.
     * ***IE***: Install [Trixie](http://www.bhelpuri.net/Trixie/). Continue to STEP 2.
     * ***OPERA***: Follow instructions located on Opera's site: [User JS](http://www.opera.com/docs/userjs/). Continue to STEP 2.
     * ***SAFARI***: Install [NinjaKit](http://d.hatena.ne.jp/os0x/20100612/1276330696). Continue to STEP 2.
-2. Install the "GitHub Fork Count" user script by clicking here: [github-get-missing-descriptions.user.js](https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js).  
+2. Install the "GitHub Get Missing Descriptions" user script by clicking here: [github-get-missing-descriptions.user.js](https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js).  
 
 ### Screenshots ###
 

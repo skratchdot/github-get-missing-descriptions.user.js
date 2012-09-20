@@ -5,10 +5,11 @@
 // @include        https://github.com/*
 // @match          https://github.com/*
 // @run-at         document-end
+// @grant          none
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
 // @updateURL      https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
-// @version        1.3
+// @version        1.4
 // ==/UserScript==
 /*global jQuery, moment */
 /*jslint browser: true, plusplus: true */
@@ -28,12 +29,12 @@ var userScript = function () {
 		updateCounts;
 
 	addDescriptionButton = function () {
-		var $firstSimpleRepo = jQuery('body.page-profile ul.repo_list li.simple:first');
+		var $firstSimpleRepo = jQuery('body.page-profile-next ul.repo_list li.simple:first');
 		if ($firstSimpleRepo.length > 0) {
-			$firstSimpleRepo.before('<div id="skratchdot-missing-descriptions" style="text-align:center; border:1px solid #ddd; border-radius:4px; padding:10px 10px 0; margin:10px 0px;">' +
+			$firstSimpleRepo.before('<div id="skratchdot-missing-descriptions" style="text-align:center; border:1px solid #ddd; border-radius:4px; padding:10px 0 0 0; margin:10px 0px;">' +
 				'<input type="button" class="minibutton" style="margin-bottom:10px;height:30px;" value="Get Missing Descriptions" />' +
-				'<div class="body" style="padding-top:15px">' +
-				'  <p class="fork-flag">' +
+				'<div style="padding:15px;border-top:1px solid #eee;background:#f9f9f9;">' +
+				'  <p class="fork-flag" style="margin:0;">' +
 				'    <span></span>' +
 				'    out of' +
 				'    <span></span>' +
@@ -94,7 +95,7 @@ var userScript = function () {
 
 	getUsername = function () {
 		if (username === '') {
-			username = jQuery('.userpage .username:first').text().trim();
+			username = jQuery('.js-username').data('name').trim();
 		}
 		return username;
 	};

@@ -9,7 +9,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
 // @updateURL      https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
-// @version        1.5
+// @version        1.6
 // ==/UserScript==
 /*global jQuery, moment */
 /*jslint browser: true, plusplus: true */
@@ -30,7 +30,7 @@ var userScript = function () {
 		updateCounts;
 
 	addDescriptionButton = function () {
-		var $firstSimpleRepo = jQuery('body.page-profile ul.repo_list li.simple:first');
+		var $firstSimpleRepo = jQuery('body.page-profile ul.js-repo-list li.simple:first');
 		if ($firstSimpleRepo.length > 0) {
 			$firstSimpleRepo.before('<div id="skratchdot-missing-descriptions" style="text-align:center; border:1px solid #ddd; border-radius:4px; padding:10px 0 0 0; margin:10px 0px;">' +
 				'<input type="button" class="minibutton" style="margin-bottom:10px;height:30px;" value="Get Missing Descriptions" />' +
@@ -48,7 +48,7 @@ var userScript = function () {
 	};
 
 	getDescription = function () {
-		if (currentRequest > 0 && jQuery('ul.repo_list li.simple:not(.skratchdot-ajax)').length > 0) {
+		if (currentRequest > 0 && jQuery('ul.js-repo-list li.simple:not(.skratchdot-ajax)').length > 0) {
 			jQuery.ajax({
 				url : 'https://api.github.com/users/' + getUsername() + '/repos',
 				method : 'get',
@@ -102,7 +102,7 @@ var userScript = function () {
 	};
 
 	handleClick = function () {
-		if (currentRequest === 0 && jQuery('ul.repo_list li.simple:not(.skratchdot-ajax)').length > 0) {
+		if (currentRequest === 0 && jQuery('ul.js-repo-list li.simple:not(.skratchdot-ajax)').length > 0) {
 			currentRequest = maxRequestsPerBatch;
 			getDescription();
 		}
@@ -110,8 +110,8 @@ var userScript = function () {
 
 	updateCounts = function () {
 		var container = jQuery('#skratchdot-missing-descriptions');
-		container.find('span:eq(0)').text(jQuery('ul.repo_list li.simple.skratchdot-ajax').length);
-		container.find('span:eq(1)').text(jQuery('ul.repo_list li.simple').length);
+		container.find('span:eq(0)').text(jQuery('ul.js-repo-list li.simple.skratchdot-ajax').length);
+		container.find('span:eq(1)').text(jQuery('ul.js-repo-list li.simple').length);
 	};
 
 	init = function () {

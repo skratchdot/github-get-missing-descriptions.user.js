@@ -9,7 +9,7 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
 // @updateURL      https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
-// @version        1.6
+// @version        1.7
 // ==/UserScript==
 /*global jQuery, moment */
 /*jslint browser: true, plusplus: true */
@@ -69,9 +69,7 @@ var userScript = function () {
 						if (container.length) {
 							updateTime = moment(repo.pushed_at || repo.updated_at);
 							container.append('<div class="body">' +
-								'<p class="description">' +
-								repo.description +
-								'</p>' +
+								'<p class="description"></p>' +
 								'<p class="updated-at">Last updated ' +
 								'<time' +
 								' title="' + updateTime.format('YYYY-MM-DD HH:mm:ss') + '"' +
@@ -81,6 +79,7 @@ var userScript = function () {
 								'</time>' +
 								'</p>' +
 								'</div>');
+							container.find('.description').text(repo.description);
 							container.addClass('skratchdot-ajax');
 							container.find('*').show();
 							container.css('margin-bottom', '10px');

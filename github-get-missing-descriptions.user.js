@@ -9,12 +9,12 @@
 // @icon           http://skratchdot.com/favicon.ico
 // @downloadURL    https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
 // @updateURL      https://github.com/skratchdot/github-get-missing-descriptions.user.js/raw/master/github-get-missing-descriptions.user.js
-// @version        1.7
+// @version        1.8
 // ==/UserScript==
 /*global jQuery, moment */
 /*jslint browser: true, plusplus: true */
 
-var userScript = function () {
+(function () {
 	'use strict';
 
 	var currentRequest = 0, // When 0, the button is enabled
@@ -127,9 +127,4 @@ var userScript = function () {
 		});
 		init();
 	});
-};
-
-// Inject our userScript script
-var script = document.createElement('script');
-script.textContent = '(' + userScript.toString() + ')();';
-document.body.appendChild(script);
+}());
